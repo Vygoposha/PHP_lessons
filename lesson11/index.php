@@ -8,9 +8,12 @@ define('SERVERNAME', 'localhost');
 // создаем подключение к БД через объект mysql
 $connect = new mysqli(SERVERNAME,DB_LOGIN,DB_PASSWORD,DB_NAME);
 // создаем переменную и пишем в нее SQL запрос
-$sql = "UPDATE `heroes` SET `age` = 39 WHERE `name`='Йенифер'";
+$sql = "UPDATE `heroes` SET `age` = 39 WHERE `name`='Флеш'";
 // Выполняем запрос чезер функцию query
-$connect->query($sql);
+if ($connect->query($sql) === TRUE){
+// Проверка выполнения запроса.
+    echo "Запись обновлена";
+}else echo "Ошибка записи";
 // Закрываем соединение с БД
 $connect->close();
 
