@@ -4,6 +4,9 @@ define('SERVERNAME', 'localhost');
 define('DB_LOGIN', 'admin');
 define('DB_PASSWORD', 'admin');
 define('DB_NAME', 'new_db');
+$name=$age=$rank='';
+
+
 
 $name=$age=$rank='';
 $connect = new mysqli(SERVERNAME, DB_LOGIN, DB_PASSWORD, DB_NAME); // создаем подключение к БД через объект mysql
@@ -15,10 +18,10 @@ $result = $connect->query($sql); // Выполняем запрос чезер �
 for ($user = array(); $row = $result->fetch_assoc(); $user[] = $row);
     // print_r($user);
 
-$connect->close(); // Закрываем соединение с БД
+$connect ->close(); // Закрываем соединение с БД
 
 // проверяем была ли отправлена форма
-if (isset($_POST['add heroes'])) {
+if (isset($_POST['add'])) {
     // сохраняем значения из пост запроса в переменную. Если значение не было введено, то подставляем по умолчанию 0
     $name = $_POST['name'] ?? '0';
     $age = $_POST['age'] ?? '0';
@@ -38,6 +41,21 @@ if(isset($_GET['change'])){
     $id_base=$user[$id]['id']??'';
     
 }
+
+?>
+
+<form action="#" method="POST">
+    <input type="text" name="name" placeholder="name" id="" value="<?=$name?>">
+    <input type="number" name="age" id="" placeholder="age" value="<?=$age?>">
+    <input type="number" name="rank" id="" placeholder="rank" value="<?=$rank?>">
+    <input type="submit" value="add" name="add">
+    <?php if (isset($_GET['change'])): ?>
+    <input type="submit" value="Edit" name="edit_heroes">
+    <input type="submit" value="Delete" name="delete_heroes">
+    <?php endif; ?>
+</form>
+
+<?php
 
 if(isset($_POST['edit_heroes'])){
     $name = $_POST['name'] ?? '0';
@@ -60,20 +78,6 @@ if(isset($_POST['delete_heroes'])){
 }
 
 // создадим форму для ввода значений и отправки их в нашу БД
-?>
-
-<form action="#" method="POST">
-    <input type="text" name="name" placeholder="name" id="" value="<?=$name?>">
-    <input type="number" name="age" id="" placeholder="age" value="<?=$age?>">
-    <input type="number" name="rank" id="" placeholder="rank" value="<?=$rank?>">
-    <input type="submit" value="add heroes" name="add heroes">
-    <?php if (isset($_GET['change'])): ?>
-    <input type="submit" value="Edit" name="edit_heroes">
-    <input type="submit" value="Delete" name="delete_heroes">
-    <?php endif; ?>
-</form>
-
-<?php
 
 // Выводим через цикл на экран c по ключу.
 // в данном случае ключ $k является номером массива в ассоциативном массиве $user
